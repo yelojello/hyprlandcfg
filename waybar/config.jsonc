@@ -1,0 +1,167 @@
+{
+
+  "layer": "top",
+  "position": "top", 
+  "height": 32,
+  
+  "modules-left":   ["cpu", "memory", "disk", "hyprland/window"],
+  "modules-center": ["custom/lock_screen", "custom/updates", "clock", "custom/power_btn"],
+  "modules-right":  ["tray", "backlight", "pulseaudio", "network", "clock#date", "battery"],
+
+    
+    "hyprland/window": {
+        "format": "{}"
+    },
+
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 20
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["", "", "", "", "", "", "", "", "", "", ""]
+    },
+
+    "cpu": {
+        "interval": 10,
+        "format": " {usage}%",
+        "max-length": 10,
+        "on-click": "kitty --start-as=fullscreen --title btop sh -c 'btop'"
+    },
+
+    "disk": {
+        "interval": 30,
+        "format": "󰋊 {percentage_used}%",
+        "path": "/",
+        "tooltip": true,
+        "tooltip-format": "HDD - {used} used out of {total} on {path} ({percentage_used}%)",
+        "on-click": "kitty --start-as=fullscreen --title btop sh -c 'btop'"
+    },
+
+    "memory": {
+        "interval": 30,
+        "format": " {}%",
+        "max-length": 10,
+        "tooltip": true,
+        "tooltip-format": "Memory - {used:0.1f}GB used",
+        "on-click": "kitty --start-as=fullscreen --title btop sh -c 'btop'"
+    },
+
+    "custom/lock_screen": {
+        "format": "",
+        "on-click": "sh -c '(sleep 0.5s; swaylock)' & disown",
+        "tooltip": false
+    },
+
+
+    "custom/power_btn": {
+        "format": "",
+        "on-click": "sh -c '(sleep 0.5s; wlogout --protocol layer-shell)' & disown",
+        "tooltip": false
+    },
+
+
+
+    "custom/updates": {
+        "format": "{}",
+        "exec": "~/.config/waybar/scripts/update-sys",
+        "on-click": "~/.config/waybar/scripts/update-sys update",
+        "interval": 300,
+        "tooltip": true
+    },
+
+    "backlight": {
+        "device": "intel_backlight",
+        "format": "{icon} {percent}%",
+        "format-icons": ["", "", ""],
+        "on-scroll-up": "brightnessctl set 1%+",
+        "on-scroll-down": "brightnessctl set 1%-",
+        "min-length": 6
+    },
+
+  "wlr/taskbar": {
+	"format": "{icon} {app_id}",
+	"icon-size": 14,
+	"icon-theme": "Papirus",
+	"tooltip-format": "{title}",
+	"on-click": "activate",
+	"on-click-middle": "close",
+  "on-click-right": "minimize-raise",
+	"ignore-list": [
+	    "Alacritty"
+	],
+	"app_ids-mapping": {
+	}
+  },
+
+  "wlr/workspaces": {
+    // "disable-scroll": true,
+    "sort-by-number": true,
+    "all-outputs": true,
+    "on-click": "activate",
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1",
+    "format": "{icon}",
+    "format-icons": {
+      "1": "<span color=\"#EBDBB2\"></span>",
+      "2": "<span color=\"#EBDBB2\"></span>",
+      "3": "<span color=\"#EBDBB2\"></span>",
+      "4": "<span color=\"#EBDBB2\"></span>",
+      "5": "<span color=\"#EBDBB2\"></span>",
+      "6": "<span color=\"#EBDBB2\"></span>",
+      "7": "<span color=\"#EBDBB2\"></span>",
+      "8": "<span color=\"#EBDBB2\"></span>",
+      "9": "<span color=\"#EBDBB2\"></span>",
+      "urgent": "",
+      "focused": "",
+      "default": ""
+    }
+  },
+
+  "tray": {
+    "icon-size": 14,
+    "spacing": 10
+  },
+
+  "clock#time": {
+    "interval": 1,
+    "format": "    {:%H:%M:%S} ",
+    "tooltip": false
+  },
+
+  "clock#date": {
+    "interval": 10,
+    "format": "    {:%e %b %y} ", // icon: calendar-alt
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+  },
+
+  "network": {
+    "format-wifi": " 直 {essid} ",
+    "format-ethernet": "   {essid} ",
+    "format-linked": "{ifname} (no ip)  ",
+    "format-disconnected": " 睊 disconnected ",
+    "tooltip-format-wifi": "signal strenght: {signalstrength}% | down speed: {bandwidthdownbits}, up speed: {bandwidthupbits}"
+  },
+
+  "pulseaudio": {
+    "format": "{icon} {volume}% ",
+    "format-muted": "   muted ",
+    "scroll-step": 5,
+    "on-click": "pactl set-sink-mute 0 toggle",
+    "on-click-middle": "pavucontrol",
+    "on-click-right": "~/.config/hypr/scripts/pactl_toggle.sh",
+    "format-icons": {
+      "headphone": "   ",
+      "hands-free": "   ",
+      "headset": "   ",
+      "phone": "   ",
+      "portable": "   ",
+      "car": "    ",
+      "default": ["   ", "   ", " 墳 ", "   "]
+    }
+  },
+}
